@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+
+    <!-- https://openweathermap.org/api/one-call-3 -->
+
+
+
+    <script>
+        
+    fetch('https://api.openweathermap.org/data/3.0/onecall?lat=33.44&lon=-94.04&appid={API key}')
+        .then((Response) => {
+            console.log(Response);//here wiil be display
+            // console.log(Response.bio);//here undefined we can accesss is possible only niche vale then me 
+            return Response
+
+        })
+        .then((receiveresponse) => {
+            console.log(receiveresponse);
+            //  console.log(receiveresponse.bio);
+        });
+    </script>
+    
+</body>
+</html>

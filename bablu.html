@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        #first {
+            margin: auto;
+            text-align: center;
+            height: 10rem;
+        }
+
+        #second {
+            text-align: center;
+            justify-content: center;
+            color: wheat;
+        }
+
+        #main {
+            background-image: url('image/banner.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid mt-1" id="main">
+        <h2 class="text-center">Whether App</h2>
+
+        <div class="row">
+            <div class="col-md" id="first">
+                <input type="text" class="inputval mt-5 p-2 w-50" placeholder="Enter Your Location">
+                <button class="button">search</button>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="row mt-5">
+            <h4 class="text-center text-bg-light">Display Information</h4>
+            <div class="col-md bg-light p-5" id="second">
+                <div class="row">
+                    <div class="col-md-2">
+
+                        <p class="country text-bg-warning p-2">Country:</p>
+                        <p class="name text-bg-warning p-2">Name</p>
+
+
+                    </div>
+
+
+                    <div class="col-md-2">
+                        <p class="lat text-bg-warning p-2">latitude:</p>
+                        <p class="lon text-bg-warning p-2">Lon:</p>
+                    </div>
+                    <div class="col-md-2 flex-column flex-wrap">
+                        <p class="sunrise text-bg-info p-2">Sunrise:</p>
+                        <p class="sunset text-bg-info p-2">Sunset:</p>
+                    </div>
+                    <div class="col-md-2">
+                        <p class="temp_max text-bg-danger p-2">Temp_max:</p>
+                        <p class="temp_min text-bg-danger p-2">Temp_min:</p>
+
+                    </div>
+                    <div class="col-md-2">
+                        <p class="desc text-bg-secondary p-2">Desc:</p>
+                        <p class="main text-bg-secondary p-2">Main:</p>
+                    </div>
+                    <div class="col-md-2">
+                        <p class="deg text-bg-primary p-2">Deg:</p>
+                        <p class="speed text-bg-primary p-2">Speed:</p>
+
+                    </div>
+                </div>
+                <!-- <h2 class="text-center temp">Temp:</h2>
+                <h1 class="lat">latitude:</h1> -->
+                <!--                 
+                <p class="lon">Lon:</p>
+                <p class="hum"></p>
+                 -->
+                <!-- <p class="pressure"></p>
+                <p class="temp_max"></p> -->
+
+                <!-- <p class="temp_min"></p>
+                <p class="name">Name</p> -->
+
+
+
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <script>
+        let button = document.querySelector('.button');
+        let inputvalue = document.querySelector('.inputval');
+
+
+        //select all display tag using class name
+        let country = document.querySelector(".country");
+        let name = document.querySelector(".name");
+        let lat = document.querySelector(".lat");
+        let lon = document.querySelector(".lon");
+        let sunrise = document.querySelector(".sunrise");
+        let sunset = document.querySelector(".sunset");
+        let temp_max = document.querySelector(".temp_max");
+        let temp_min = document.querySelector(".temp_min");
+        let desc = document.querySelector(".desc");
+        let main = document.querySelector(".main");
+        let deg = document.querySelector(".deg");
+        let speed = document.querySelector(".speed");
+
+
+
+        // alert("welcome");
+
+
+        button.addEventListener("click", () => {
+
+            const api = '79b85efe1767dbfdf649808fc18d209f';
+
+            // const url=`http://api.openweathermap.org/geo/1.0/direct?q=${inputvalue.value}&appid=${api}&units=metric`;
+            let source = `https://api.openweathermap.org/data/2.5/weather?q=${inputvalue.value}&appid=${api}`;
+            // let url1=`https://api.openweathermap.org/data/2.5/weather?lat=72.34&lon=82.99&appid=${api}`;
+
+            fetch(source)
+                .then((Response) => {
+                    console.log(Response);//here wiil be display
+                    // console.log(Response.bio);//here undefined we can accesss is possible only niche vale then me 
+                    return Response.json();
+
+                })
+                .then((receiveresponse) => {
+
+                    display(receiveresponse);
+                    console.log(receiveresponse);
+                    console.log(receiveresponse.coord.lat);
+                    console.log(receiveresponse.coord.lon);
+                    console.log(receiveresponse.main.humidity);
+                    console.log(receiveresponse.main.pressure);
+                    console.log(receiveresponse.main.temp);
+                    console.log(receiveresponse.main.temp_max);
+                    console.log(receiveresponse.main.temp_min);
+                    console.log(receiveresponse.name);
+                    console.log(receiveresponse.sys.country);
+                    console.log(receiveresponse.sys.sunrise);
+                    console.log(receiveresponse.sys.sunset);
+                    console.log(receiveresponse.weather[0].description);
+                    console.log(receiveresponse.weather[0].main);
+                    console.log(receiveresponse.wind.deg);
+                    console.log(receiveresponse.wind.speed);
+
+
+
+                }).catch(error => {
+                    console.error('Error fetching weather data:', error);
+                    alert("this is not a city");
+                });
+
+
+
+        })
+
+
+
+
+        //    const displaydata=(weather)=>{
+        //     temp.innerText=`${weather.main.temp}`;
+        //     desc.innerText=`${weather[0].main};`
+        //    }
+
+
+
+        function display(data) {
+            country.innerHTML = `Country: ${data.sys.country}`;
+            name.innerHTML = `City: ${data.name}`;
+            lat.innerHTML = `Latitude: ${data.coord.lat}`;
+            lon.innerHTML = `longtitude: ${data.coord.lon}`;
+            sunrise.innerHTML = `Sunrise: ${data.sys.sunrise}`;
+            sunset.innerHTML = `Sunset: ${data.sys.sunset}`;
+            temp_max.innerHTML = `Temp_Max: ${data.main.temp_max}`;
+            temp_min.innerHTML = `Temp_min: ${data.main.temp_min}`;
+            desc.innerHTML = `Desc: ${data.weather[0].description}`;
+            deg.innerHTML = `Degree: ${data.wind.deg}`;
+            speed.innerHTML = `Speed: ${data.wind.speed}km/h`;
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>
